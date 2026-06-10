@@ -51,6 +51,6 @@ jobs:
           echo "TMAS_REGION=$TMAS_REGION" >> ~/.tmas/.env
           echo ""
           echo "=== RUNNING TMAS SCAN ==="
-          ./tmas scan artifact dir:./trendai-test-app \
+          ./tmas scan dir:./trendai-test-app \
             --vulnerabilities --malware --secrets \
             --region "$TMAS_REGION"
