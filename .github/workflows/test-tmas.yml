@@ -1,0 +1,53 @@
+name: Test TMAS Step by Step
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  debug:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Debug environment
+        env:
+          TMAS_API_KEY: ${{ secrets.TMAS_API_KEY }}
+          TMAS_REGION: ${{ secrets.VISION_ONE_REGION }}
+        run: |
+          echo "=== ENVIRONMENT DEBUG ==="
+          echo "API Key length: ${#TMAS_API_KEY}"
+          echo "API Key first 20 chars: ${TMAS_API_KEY:0:20}..."
+          echo "Region: $TMAS_REGION"
+          echo ""
+          echo "=== CURRENT DIRECTORY ==="
+          pwd
+          echo ""
+          echo "=== FILES STRUCTURE ==="
+          ls -la
+          echo ""
+          echo "=== TEST APP CONTENT ==="
+          ls -la trendai-test-app/
+
+      - name: Download TMAS CLI
+        run: |
+          echo "=== DOWNLOADING TMAS ==="
+          curl -L "https://ast-cli.xdr.trendmicro.com/tmas-cli/2.252.0/tmas-cli_Linux_x86_64.tar.gz" | tar xz
+          echo ""
+          echo "=== TMAS VERSION ==="
+          ./tmas --version
+
+      - name: Test TMAS Scan
+        env:
+          TMAS_API_KEY: ${{ secrets.TMAS_API_KEY }}
+          TMAS_REGION: ${{ secrets.VISION_ONE_REGION }}
+        run: |
+          echo "=== RUNNING TMAS SCAN ==="
+          echo "Command: tmas scan artifact ./trendai-test-app --vulnerabilities --malware --secrets --region \$TMAS_REGION"
+          echo ""
+          ./tmas scan artifact ./trendai-test-app \
+            --vulnerabilities --malware --secrets \
+            --region "$TMAS_REGION"
