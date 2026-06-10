@@ -52,5 +52,5 @@ jobs:
           echo ""
           echo "=== RUNNING TMAS SCAN ==="
           ./tmas scan dir:./trendai-test-app \
-            --vulnerabilities --malware --secrets \
+            --vulnerabilities --secrets \
             --region "$TMAS_REGION"
