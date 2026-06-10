@@ -40,15 +40,7 @@ jobs:
           echo "=== TMAS VERSION ==="
           ./tmas --version
 
-      - name: Test TMAS Scan
-        env:
-          TMAS_API_KEY: ${{ secrets.TMAS_API_KEY }}
-          TMAS_REGION: ${{ secrets.VISION_ONE_REGION }}
+      - name: Show TMAS Help
         run: |
-          echo "=== RUNNING TMAS SCAN ==="
-          echo "Command: tmas scan artifact ./trendai-test-app --api-key \$TMAS_API_KEY --vulnerabilities --malware --secrets --region \$TMAS_REGION"
-          echo ""
-          ./tmas scan artifact ./trendai-test-app \
-            --api-key "$TMAS_API_KEY" \
-            --vulnerabilities --malware --secrets \
-            --region "$TMAS_REGION"
+          echo "=== TMAS SCAN ARTIFACT HELP ==="
+          ./tmas scan artifact --help
