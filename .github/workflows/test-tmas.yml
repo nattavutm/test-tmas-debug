@@ -46,8 +46,9 @@ jobs:
           TMAS_REGION: ${{ secrets.VISION_ONE_REGION }}
         run: |
           echo "=== RUNNING TMAS SCAN ==="
-          echo "Command: tmas scan artifact ./trendai-test-app --vulnerabilities --malware --secrets --region \$TMAS_REGION"
+          echo "Command: tmas scan artifact ./trendai-test-app --api-key \$TMAS_API_KEY --vulnerabilities --malware --secrets --region \$TMAS_REGION"
           echo ""
           ./tmas scan artifact ./trendai-test-app \
+            --api-key "$TMAS_API_KEY" \
             --vulnerabilities --malware --secrets \
             --region "$TMAS_REGION"
